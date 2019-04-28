@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "617864492019",
+    "firebase_url": "https://hypmobile-51803.firebaseio.com",
+    "project_id": "hypmobile-51803",
+    "storage_bucket": "hypmobile-51803.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617864492019:android:ca2475adc2e1a17f",
+        "android_client_info": {
+          "package_name": "hyp.mobile.com.br"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617864492019-ued1hr2251ifhmle6uqa74m84utm2qtr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hyp.mobile.com.br",
+            "certificate_hash": "1beae715dd2ac733bd8137af4b2d40a5c73aa20e"
+          }
+        },
+        {
+          "client_id": "617864492019-ernrvsea388iu6fre6mibqgdlvalcgro.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd0_5MdwduVXROEelUVqRar3fU_BUqH3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617864492019-ernrvsea388iu6fre6mibqgdlvalcgro.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
