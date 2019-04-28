@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">hyp_mobile</string>
+    <string name="login_email_hint">Digite seu email</string>
+    <string name="login_passwd_hint">Digite sua senha</string>
+    <string name="redirect_cadastro">Não tem conta? Cadastre-se!</string>
+    <string name="descricao_imagem_login">Imagem de um broto</string>
 </resources>
