@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_cadastro_usuario"
-    tools:context=".CadastroUsuario">
+    tools:context=".CadastroUsuarioActivity">
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="218dp"
         android:layout_height="157dp"
         android:layout_marginTop="44dp"
+        android:contentDescription="@string/adicionar_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +25,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Digite o seu nome"
+        android:hint="@string/campo_cadastro_nome"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/cadastroEmailId"
@@ -41,29 +43,31 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cadastroNomeId" />
+        app:layout_constraintTop_toBottomOf="@+id/cadastroNomeId"
+        android:autofillHints="" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/cadastroSenhaId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Digite sua senha"
+        android:hint="@string/campo_cadastro_senha"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cadastroEmailId" />
+        app:layout_constraintTop_toBottomOf="@+id/cadastroEmailId"
+        android:autofillHints="" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/botaoCadastrarId"
         android:layout_width="214dp"
         android:layout_height="49dp"
         android:layout_marginTop="16dp"
-        android:text="Cadastrar"
+        android:text="@string/cadastrar_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/cadastroSenhaId" />
 
 </android.support.constraint.ConstraintLayout>

@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         registroUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, CadastroUsuario.class);
+                Intent intent = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
                 startActivity(intent);
                 finish();
             }

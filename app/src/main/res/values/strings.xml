@@ -4,4 +4,8 @@
     <string name="login_passwd_hint">Digite sua senha</string>
     <string name="redirect_cadastro">Não tem conta? Cadastre-se!</string>
     <string name="descricao_imagem_login">Imagem de um broto</string>
+    <string name="adicionar_usuario">Adicionar usuário</string>
+    <string name="campo_cadastro_nome">Digite o seu nome</string>
+    <string name="campo_cadastro_senha">Digite sua senha</string>
+    <string name="cadastrar_btn">Cadastrar</string>
 </resources>
