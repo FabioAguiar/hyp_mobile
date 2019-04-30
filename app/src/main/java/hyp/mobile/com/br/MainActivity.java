@@ -3,6 +3,9 @@ package hyp.mobile.com.br;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,7 +16,6 @@ import hyp.mobile.com.br.config.ConfiguracaoFirebase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button deslogar;
     private FirebaseAuth auth;
 
     @Override
@@ -21,21 +23,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        deslogar = (Button) findViewById(R.id.botaoDeslogarId);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
 
+        return true;
+    }
 
-        deslogar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                auth = ConfiguracaoFirebase.getFirebaseAuth();
-                auth.signOut();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        switch ( item.getItemId() ){
+            case R.id.item_deslogar:
+                deslogarUsuario();
+                return true;
+            case  R.id.item_adicionar_broker:
+                abrirTelaCadastroBroker();
+                return true;
+        }
 
+        return true;
+    }
+
+    private void deslogarUsuario(){
+        auth = ConfiguracaoFirebase.getFirebaseAuth();
+        auth.signOut();
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void abrirTelaCadastroBroker(){
+        Intent intent = new Intent(MainActivity.this, CadastroBrokerActivity.class);
+        startActivity(intent);
     }
 }
