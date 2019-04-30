@@ -1,27 +1,70 @@
 package hyp.mobile.com.br;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 
 import hyp.mobile.com.br.config.ConfiguracaoFirebase;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private SQLiteDatabase bancoDados;
+    private ListView listaViewBroker;
+    private ArrayAdapter<String> itensAdaptador;
+    private ArrayList<String> itens;
+    private ArrayList<Integer>  ids;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try{
+
+            //Lista
+            listaViewBroker = (ListView) findViewById(R.id.brokerListID);
+
+            //Banco de dados
+            bancoDados = openOrCreateDatabase("app_hyp", MODE_PRIVATE, null);
+
+            //Tabela tarefas
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS broker(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "name VARCHAR,  address VARCHAR, port VARCHAR, userName VARCHAR, userPass VARCHAR, " +
+                    "clientID VARCHAR) ");
+
+            listaViewBroker.setLongClickable(true);
+            listaViewBroker.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    removerBroker(ids.get(position));
+                    recuperarBroker();
+                }
+            });
+
+            recuperarBroker();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -60,5 +103,49 @@ public class MainActivity extends AppCompatActivity {
     private void abrirTelaCadastroBroker(){
         Intent intent = new Intent(MainActivity.this, CadastroBrokerActivity.class);
         startActivity(intent);
+    }
+
+    private void recuperarBroker(){
+
+        try{
+            //Recuperar brokers
+            Cursor cursor = bancoDados.rawQuery("SELECT * FROM broker ORDER BY id DESC", null);
+
+            //Recuperar os ids das colunas
+            int indiceColunaId = cursor.getColumnIndex("id");
+            int indiceColunaBroker = cursor.getColumnIndex("name");
+
+            //Criar adaptador
+            itens = new ArrayList<String>();
+            ids = new ArrayList<Integer>();
+            itensAdaptador = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_list_item_2,
+                    android.R.id.text2,
+                    itens);
+            listaViewBroker.setAdapter( itensAdaptador );
+
+            //listar as tarefas
+            cursor.moveToFirst();
+            //Log.i("Resultado: ", cursor.getString(indiceColunaTarefa) );
+
+            while (cursor != null){
+                Log.i("Resultado - ", "Broker: " + cursor.getString(indiceColunaBroker) );
+                itens.add( cursor.getString(indiceColunaBroker) );
+                ids.add( Integer.parseInt(cursor.getString(indiceColunaId)) );
+
+                cursor.moveToNext();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void removerBroker(Integer id){
+
+        try{
+            bancoDados.execSQL("DELETE FROM broker WHERE id ="+id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
