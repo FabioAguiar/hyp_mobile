@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="background_login">#FFFFFF</color>
     <color name="background_cadastros">#7AB0F3</color>
+    <color name="black">#000000</color>
 </resources>

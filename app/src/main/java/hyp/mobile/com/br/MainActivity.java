@@ -20,16 +20,21 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import hyp.mobile.com.br.adapter.BrokerAdapter;
 import hyp.mobile.com.br.config.ConfiguracaoFirebase;
+import hyp.mobile.com.br.model.Broker;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private SQLiteDatabase bancoDados;
     private ListView listaViewBroker;
+    private ArrayAdapter adapter;
+    private ArrayList<Broker> listaBrokers;
     private ArrayAdapter<String> itensAdaptador;
     private ArrayList<String> itens;
     private ArrayList<Integer>  ids;
+    private Broker broker;
 
 
     @Override
@@ -45,17 +50,21 @@ public class MainActivity extends AppCompatActivity {
             //Banco de dados
             bancoDados = openOrCreateDatabase("app_hyp", MODE_PRIVATE, null);
 
-            //Tabela tarefas
+            //Tabela de brokers cadastrados
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS broker(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "name VARCHAR,  address VARCHAR, port VARCHAR, userName VARCHAR, userPass VARCHAR, " +
                     "clientID VARCHAR) ");
 
-            listaViewBroker.setLongClickable(true);
+            listaViewBroker.setLongClickable(false);
             listaViewBroker.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    removerBroker(ids.get(position));
-                    recuperarBroker();
+
+                    Intent intent = new Intent(MainActivity.this, PanelActivity.class);
+                    startActivity(intent);
+
+                    //removerBroker(ids.get(position));
+                    //recuperarBroker();
                 }
             });
 
@@ -113,25 +122,43 @@ public class MainActivity extends AppCompatActivity {
 
             //Recuperar os ids das colunas
             int indiceColunaId = cursor.getColumnIndex("id");
-            int indiceColunaBroker = cursor.getColumnIndex("name");
+            int indiceColunaNameBroker = cursor.getColumnIndex("name");
 
             //Criar adaptador
+            listaBrokers = new ArrayList<>();
+            broker = new Broker();
+           // adapter = new BrokerAdapter( MainActivity.this, listaBrokers );
+           // listaViewBroker.setAdapter( adapter );
+
             itens = new ArrayList<String>();
             ids = new ArrayList<Integer>();
+
+
             itensAdaptador = new ArrayAdapter<String>(getApplicationContext(),
+
                     android.R.layout.simple_list_item_2,
                     android.R.id.text2,
                     itens);
             listaViewBroker.setAdapter( itensAdaptador );
+
 
             //listar as tarefas
             cursor.moveToFirst();
             //Log.i("Resultado: ", cursor.getString(indiceColunaTarefa) );
 
             while (cursor != null){
-                Log.i("Resultado - ", "Broker: " + cursor.getString(indiceColunaBroker) );
-                itens.add( cursor.getString(indiceColunaBroker) );
+                Log.i("Resultado - ", "Broker: " + cursor.getString(indiceColunaNameBroker) );
+                itens.add( cursor.getString(indiceColunaNameBroker) );
                 ids.add( Integer.parseInt(cursor.getString(indiceColunaId)) );
+
+                broker.setName( cursor.getString(cursor.getColumnIndex("name")) );
+                broker.setAddress(cursor.getString(cursor.getColumnIndex("address")));
+                broker.setPort(cursor.getString(cursor.getColumnIndex("port")));
+                broker.setUserName(cursor.getString(cursor.getColumnIndex("userName")));
+                broker.setUserPass(cursor.getString(cursor.getColumnIndex("userPass")));
+                broker.setClientID(cursor.getString(cursor.getColumnIndex("clientID")));
+
+                listaBrokers.add(broker);
 
                 cursor.moveToNext();
             }
